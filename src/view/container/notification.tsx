@@ -16,6 +16,7 @@ const ListNotification = () => {
   const [result, setResult] = useState<NotificationData[]>([])
   const [token, setToken] = useState('')
   const [topic, setTopic] = useState('')
+  const [loading, setLoading] = useState(false)
 
   const getRegisToken = useCallback(async () => {
     const token = await notificationSDK.getDeviceToken()
@@ -24,10 +25,13 @@ const ListNotification = () => {
 
   const onSubscribeTopic = async () => {
     try {
-      const { data } = await notificationSDK.onSubscribeTopic(token, topic)
+      setLoading(true)
+      const data = await notificationSDK.onSubscribeTopic(token, topic)
       notifySuccess(data.message)
     } catch (error) {
       notifyError(error)
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -44,6 +48,11 @@ const ListNotification = () => {
     const notifications = await notificationSDK.getListMessageOnTopic(topic)
     return setResult(notifications)
   }, [topic])
+
+  const onClickAction = (url = '') => {
+    if (!url) return
+    return window.open(url, '_blank')
+  }
 
   useEffect(() => {
     notificationSDK.onListenTopicMessage(setData)
@@ -71,11 +80,18 @@ const ListNotification = () => {
         <Col span={24}>
           <Space>
             <SelectTopic setTopic={setTopic} />
-            <Button onClick={onSubscribeTopic}>Subscribe</Button>
+            <Button loading={loading} onClick={onSubscribeTopic}>
+              Subscribe
+            </Button>
           </Space>
         </Col>
         {[...result].map((data) => (
-          <Col span={24} key={data.createdAt}>
+          <Col
+            span={24}
+            key={data.createdAt}
+            onClick={() => onClickAction(data.clickAction)}
+            style={{ cursor: 'pointer' }}
+          >
             <Row gutter={[12, 12]} align="bottom">
               <Col flex="auto">
                 <Typography.Title level={5}>{data.title}</Typography.Title>
@@ -86,9 +102,13 @@ const ListNotification = () => {
               <Col span={24}>
                 <Typography.Text>{data.description}</Typography.Text>
               </Col>
-
               <Col span={24}>
-                <Image src={data.thumbnail} height={100} width={100} />
+                <Image
+                  preview={false}
+                  src={data.thumbnail}
+                  height={100}
+                  width={100}
+                />
               </Col>
             </Row>
           </Col>

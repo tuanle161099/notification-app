@@ -3,6 +3,7 @@ export type NotificationData = {
   thumbnail: string
   description: string
   createdAt: string
+  clickAction?: string
 }
 
 export type NotificationPayload = {
@@ -10,4 +11,5 @@ export type NotificationPayload = {
   thumbnail: string
   description: string
   topic_name: string
+  clickAction?: string
 }

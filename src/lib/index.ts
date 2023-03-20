@@ -34,12 +34,13 @@ class SenNotificationSDK {
   }
 
   onListenTopicMessage = (observer: (data: NotificationData) => void) => {
-    onMessage(this.messaging, (payload) => {
+    onMessage(this.messaging, (payload: any) => {
       const noti: NotificationData = {
         createdAt: payload.data?.createdAt || '',
         thumbnail: payload.notification?.icon || '',
         title: payload.notification?.title || '',
         description: payload.notification?.body || '',
+        clickAction: payload.fcmOptions?.link || '',
       }
       observer(noti)
     })

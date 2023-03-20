@@ -5,6 +5,7 @@ import SelectTopic from '../components/selectTopic'
 
 import configs from '../config'
 import { notifyError, notifySuccess } from '../utils'
+import { NotificationPayload } from '../lib/types'
 
 const {
   sdk: { notificationSDK },
@@ -12,11 +13,12 @@ const {
 
 const Admin = () => {
   const [loading, setLoading] = useState(false)
-  const [content, setContent] = useState({
+  const [content, setContent] = useState<NotificationPayload>({
     title: '',
     description: '',
     thumbnail: '',
     topic_name: '',
+    clickAction: '',
   })
   const onChange = (e: any) => {
     const target = e.target
@@ -49,13 +51,13 @@ const Admin = () => {
         </Col>
         <Col span={24}>
           <Space direction="vertical" style={{ width: '100%' }}>
-            <Typography.Text>Title</Typography.Text>
+            <Typography.Text type="secondary">Title</Typography.Text>
             <Input name="title" value={content.title} onChange={onChange} />
           </Space>
         </Col>
         <Col span={24}>
           <Space direction="vertical" style={{ width: '100%' }}>
-            <Typography.Text>Description</Typography.Text>
+            <Typography.Text type="secondary">Description</Typography.Text>
             <Input.TextArea
               name="description"
               value={content.description}
@@ -65,10 +67,22 @@ const Admin = () => {
         </Col>
         <Col span={24}>
           <Space direction="vertical" style={{ width: '100%' }}>
-            <Typography.Text>Thumbnail</Typography.Text>
-            <Input.TextArea
+            <Typography.Text type="secondary">Thumbnail</Typography.Text>
+            <Input
               name="thumbnail"
               value={content.thumbnail}
+              onChange={onChange}
+            />
+          </Space>
+        </Col>
+        <Col span={24}>
+          <Space direction="vertical" style={{ width: '100%' }}>
+            <Typography.Text type="secondary">
+              Click Action (Optional)
+            </Typography.Text>
+            <Input
+              name="clickAction"
+              value={content.clickAction}
               onChange={onChange}
             />
           </Space>

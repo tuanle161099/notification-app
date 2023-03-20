@@ -42,7 +42,9 @@ const SignUp = () => {
     <Row gutter={[24, 24]} justify="center">
       <Col>
         <Space align="center" direction="vertical" style={{ width: '100%' }}>
-          <Typography.Title level={3}>Sentre's Notification</Typography.Title>
+          <Typography.Title level={3}>
+            Sentre's Notification System
+          </Typography.Title>
           <Image height={100} width={100} src={SignInImg} preview={false} />
         </Space>
       </Col>
