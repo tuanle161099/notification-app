@@ -16,14 +16,14 @@ const Header = () => {
   }
   return (
     <Card
-      style={{ borderRadius: '0 0 8px 8px', background: 'white' }}
-      bodyStyle={{ padding: 12 }}
+      style={{ borderRadius: '0 0 16px 16px', background: 'white' }}
+      bodyStyle={{ padding: '12px 24px' }}
       bordered={false}
     >
       <Row align="middle">
         <Col flex="auto">
           <Typography.Title level={4}>
-            Welcome to Sentre' Notification 🚀🚀🚀
+            Welcome to Sentre' Notification System 🚀🚀🚀
           </Typography.Title>
         </Col>
         <Col>
